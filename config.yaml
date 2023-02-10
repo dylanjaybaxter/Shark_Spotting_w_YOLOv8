@@ -1,0 +1,10 @@
+## Training Configuration for YOLOv8
+project: "YSP"
+experiment_name: "Download_Test"
+data_dir: "./datasets/data.yaml"
+model: "yolov8n.pt"
+batch:  16
+epochs: 1
+patience: 25
+im_size: 640
+device: 0
