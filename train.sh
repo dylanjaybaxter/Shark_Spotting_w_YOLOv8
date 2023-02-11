@@ -19,47 +19,21 @@ parse_yaml() {
 }
 
 eval $(parse_yaml config.yaml)
-echo $model
-
-# Download the dataset
-
-if [ ! -d "./datasets" ]; then
-    mkdir datasets/
-    cd datasets/
-    curl -L "https://app.roboflow.com/ds/WXhb7XSaNb?key=B7P99J5E8P" > roboflow.zip
-    unzip roboflow.zip
-    rm roboflow.zip
-    cd ../
-else
-  # Command(s) to run if the directory exists
-  echo "Directory ./datasets already exists."
-fi
-
-# Download Python dependencies
-check_python_package() {
-  local package_name=$1
-  python3 -c "import $package_name" &> /dev/null
-  if [ $? -ne 0 ]; then
-    echo "The package '$package_name' is not installed."
-    python3 pip install -m $package_name
-  else
-    echo "The package '$package_name' is installed."
-  fi
-}
-
-check_python_package "ultralytics"
-check_python_package "roboflow"
-check_python_package "utils" 
 
 # Run the Training Script
 yolo task=detect \
   mode=train \
   model=$model \
-  project=$project \
-  name=$experiment_name \
+  project=$project_train \
+  name=$experiment_train \
   data=$data_dir \
   epochs=$epochs \
   imgsz=$im_size \
   batch=$batch \
   patience=$patience \
-  device=$device
+  device=$device 2>&1 
+
+
+# Zip the Training Data For Later
+echo "Zipping up..."
+zip -r ./${project_train}/${experiment_train}.zip ./${project_train}/${experiment_train}/
