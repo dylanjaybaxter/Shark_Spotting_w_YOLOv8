@@ -1,10 +1,22 @@
+## Setup Configuration
+roboflow_url: "https://app.roboflow.com/ds/WXhb7XSaNb?key=B7P99J5E8P"
+# python_packages(lists not supported): ['ultralytics', 'roboflow', 'utils']
+
 ## Training Configuration for YOLOv8
-project: "YSP"
-experiment_name: "Download_Test"
+project_train: "YSP"
+experiment_train: "test_run"
 data_dir: "./datasets/data.yaml"
 model: "yolov8n.pt"
-batch:  16
+batch: 32
 epochs: 1
 patience: 25
 im_size: 640
 device: 0
+
+## Test Evalutaion Configuration Parameters
+test_data_dir: "datasets/data_test.yaml"
+confidence: 0.001
+iou: 0.6
+save_json: True
+project_test: "YSP"
+experiment_test: "test_run"
