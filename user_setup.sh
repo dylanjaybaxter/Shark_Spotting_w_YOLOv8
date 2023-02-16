@@ -4,8 +4,7 @@ if [ $# -ne 0 ] ; then
     # Add user binaries folder to PATH
     echo "Setting up for user ${1}"
     echo "If you didn't put a '.' before this command, you won't find the yolo CLI"
-    PATH=$PATH://home/${1}/.local/bin
-
+    
     # Read parameters from config
     parse_yaml() {
     local prefix=$2
@@ -39,21 +38,24 @@ if [ $# -ne 0 ] ; then
         echo "Directory ./datasets already exists."
     fi
 
-    # Download Python dependencies
+    # Create local site package dir and download python dependencies
+    mkdir $python_dir
+    python3 -c "import sys; sys.path.append(\"${python_dir}\")";
     check_python_package() {
         local package_name=$1
         python3 -c "import $package_name" &> /dev/null
         if [ $? -ne 0 ]; then
             echo "The package '$package_name' is not installed."
-            python3 pip install -m $package_name
+            python3 -m pip install --target=$python_dir $package_name
         else
             echo "The package '$package_name' is installed."
         fi
     }
-
     check_python_package "ultralytics"
     check_python_package "roboflow"
     check_python_package "utils" 
+    export PATH=$PATH:${python_dir}/bin/
+
 else
     echo "Please enter a username in the form:"
     echo ". user_setup.sh [USERNAME]"

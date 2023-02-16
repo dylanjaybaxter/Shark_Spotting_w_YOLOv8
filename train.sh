@@ -32,8 +32,3 @@ yolo task=detect \
   batch=$batch \
   patience=$patience \
   device=$device 2>&1 
-
-
-# Zip the Training Data For Later
-echo "Zipping up..."
-zip -r ./${project_train}/${experiment_train}.zip ./${project_train}/${experiment_train}/
