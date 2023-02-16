@@ -1,7 +1,7 @@
 # This contains information for quick n easy scp
 remote_user: "dybaxter"
 remote_host: "127x01.csc.calpoly.edu"
-remote_pass: 
+remote_pass: NONE
 remote_folder: "/mpac/Shark_Spotting_w_YOLOv8/YSP"
 remote_exp: "default_100_epochs"
 local_folder: "/mnt/c/Users/dylan/Documents/Data/YSP_Training_Results/"

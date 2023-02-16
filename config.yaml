@@ -1,6 +1,7 @@
 ## Setup Configuration
 roboflow_url: "https://app.roboflow.com/ds/WXhb7XSaNb?key=B7P99J5E8P"
 # python_packages(lists not supported): ['ultralytics', 'roboflow', 'utils']
+python_dir: "/mpac/pylib/"
 
 ## Training Configuration for YOLOv8
 project_train: "YSP"

@@ -56,7 +56,4 @@ yolo task=detect \
 
   mv output.txt ${project_test_folder}/${exp_test_folder}/
 
-# Zip the Training Data For Later
-echo "Zipping up..."
-zip -r ./${project_test_folder}/${exp_test_folder}.zip ./${project_test_folder}/${experiment_test_folder}/
 

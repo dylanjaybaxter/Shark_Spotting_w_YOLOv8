@@ -20,9 +20,15 @@ local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
     }'
 }
 
-eval $(parse_yaml dl_config.yaml)
+eval $(parse_yaml dl_config_db.yaml)
 
-echo "sshpass -p ${remote_pass} scp ${remote_user}@${remote_host}:${remote_folder}/${remote_exp}.zip ${local_folder}"
+# SSH into the host machine and zip the folder
+sshpass -p ${remote_pass} -v ssh ${remote_user}@${remote_host} "zip -r ${remote_folder}/${remote_exp}.zip ${remote_folder}/${remote_exp}"
 
-# SSH into the host machine
-sshpass -p ${remote_pass} scp ${remote_user}@${remote_host}:${remote_folder}/${remote_exp}.zip ${local_folder}
+# Copy the .zip file onto the local machine
+sshpass -p ${remote_pass} -v scp ${remote_user}@${remote_host}:${remote_folder}/${remote_exp}.zip ${local_folder}
+
+# Remove the .zip file
+sshpass -p ${remote_pass} -v ssh ${remote_user}@${remote_host} "rm ${remote_folder}/${remote_exp}.zip"
+
+
