@@ -40,7 +40,7 @@ if [ $# -ne 0 ] ; then
 
     # Create local site package dir and download python dependencies
     mkdir $python_dir
-    python3 -c "import sys; sys.path.append(\"${python_dir}\")";
+    python3 -c "import sys; sys.path.append(\"${python_dir}\")"
     check_python_package() {
         local package_name=$1
         python3 -c "import $package_name" &> /dev/null
