@@ -40,7 +40,8 @@ if [ $# -ne 0 ] ; then
 
     # Create local site package dir and download python dependencies
     mkdir $python_dir
-    python3 -c "import sys; sys.path.append(\"${python_dir}\")";
+    python3 -c "import sys; sys.path.append(\"${python_dir}\")"
+    export PYTHONPATH=$PYTHONPATH:${python_dir}
     check_python_package() {
         local package_name=$1
         python3 -c "import $package_name" &> /dev/null
@@ -54,7 +55,7 @@ if [ $# -ne 0 ] ; then
     check_python_package "ultralytics"
     check_python_package "roboflow"
     check_python_package "utils" 
-    export PATH=$PATH:${python_dir}/bin/
+    export PATH=$PATH:${python_dir}bin/
 
 else
     echo "Please enter a username in the form:"
