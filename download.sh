@@ -20,7 +20,7 @@ local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
     }'
 }
 
-eval $(parse_yaml dl_config_db.yaml)
+eval $(parse_yaml dl_config.yaml)
 
 echo "sshpass -p ${remote_pass} scp ${remote_user}@${remote_host}:${remote_folder}/${remote_exp}.zip ${local_folder}"
 
