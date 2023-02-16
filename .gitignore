@@ -2,3 +2,4 @@ datasets/
 YSP/
 YSP_test/
 yolov8n.pt
+dl_config_db.yaml
