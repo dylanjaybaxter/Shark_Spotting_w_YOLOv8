@@ -1,18 +1,36 @@
 ## Setup Configuration
 roboflow_url: "https://app.roboflow.com/ds/WXhb7XSaNb?key=B7P99J5E8P"
+# D4MSLargeSet_No_Augmentation: https://app.roboflow.com/ds/WXhb7XSaNb?key=B7P99J5E8P
+# D4MSLargeSet: https://app.roboflow.com/ds/ZT83hNUbvA?key=qC45ah4HO7
 # python_packages(lists not supported): ['ultralytics', 'roboflow', 'utils']
 python_dir: "/mpac/pylib/"
 
 ## Training Configuration for YOLOv8
-project_train: "YSP"
-experiment_train: "test_run"
-data_dir: "./datasets/data.yaml"
-model: "yolov8n.pt"
-batch: 32
-epochs: 1
-patience: 25
-im_size: 640
-device: 0
+project_train: "YSP"             # Project Name
+experiment_train: "test_run"     # Experiment Name
+data_dir: "./datasets/data.yaml" # Data Path
+model: "yolov8n.pt"     # Model Path
+batch: 32               # Batch Size
+epochs: 1               # Epochs
+patience: 25            # Patience (Early Stopping)
+im_size: 640            # Input Image Size
+device: 0               # Device Number
+workers: 8              # Parallel Workers
+overwrite: False        # Overwrite Existing Experiment
+lr0: 0.01               # Initial Learning Rate
+lrf: 0.01               # Final Learning Rate
+momentum: 0.937         # Momentum (amount previous wt change influences current)
+weight_decay: 0.005     # Weight Decay During Training
+warmup: 3.0             # Warmup Epochs
+warmup_momentum: 0.8    # Warmup Momentum
+warmup_bias_lr: 0.1     # Warmup bias learning rate
+box: 7.5                # Box Loss Gain
+cls: 0.5                # Class Loss Gain
+dfl: 1.5                # dfl Loss Gain
+fl_gamma: 0.0           # Focal Loss Gamma
+label_smoothing: 0.0    # Label Smoothing
+nbs: 64                 # Nominal Batch Size
+
 
 ## Test Evalutaion Configuration Parameters
 test_data_dir: "datasets/data_test.yaml"
