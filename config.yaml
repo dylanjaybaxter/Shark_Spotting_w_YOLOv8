@@ -6,30 +6,30 @@ roboflow_url: "https://app.roboflow.com/ds/WXhb7XSaNb?key=B7P99J5E8P"
 python_dir: "/mpac/pylib/"
 
 ## Training Configuration for YOLOv8
-project_train: "YSP"             
-experiment_train: "test_run"     
-data_dir: "./datasets/data.yaml" 
-model: "yolov8n.pt"     
-batch: 32               
-epochs: 1               
-patience: 25            
-im_size: 640            
-device: 0               
-workers: 8              
-overwrite: False        
-lr0: 0.01              
-lrf: 0.01               
-momentum: 0.937         
-weight_decay: 0.005    
-warmup: 3.0             
-warmup_momentum: 0.8    
-warmup_bias_lr: 0.1     
-box: 7.5                
-cls: 0.5               
-dfl: 1.5                
-fl_gamma: 0.0           
-label_smoothing: 0.0    
-nbs: 64                 
+project_train: "YSP"
+experiment_train: "test_run"
+data_dir: "./datasets/data.yaml"
+model: "yolov8n.pt"
+batch: 32
+epochs: 1
+patience: 25
+im_size: 640
+device: 0
+workers: 8
+overwrite: False
+lr0: 0.01
+lrf: 0.01
+momentum: 0.937
+weight_decay: 0.005
+warmup: 3.0
+warmup_momentum: 0.8
+warmup_bias_lr: 0.1
+box: 7.5
+cls: 0.5
+dfl: 1.5
+fl_gamma: 0.0
+label_smoothing: 0.0
+nbs: 64
 
 
 ## Test Evalutaion Configuration Parameters

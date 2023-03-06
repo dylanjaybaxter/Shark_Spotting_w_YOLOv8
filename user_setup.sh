@@ -7,20 +7,20 @@ if [ $# -ne 0 ] ; then
     
     # Read parameters from config
     parse_yaml() {
-    local prefix=$2
-    local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
-        sed -ne "s|^\($s\):|\1|" \
-                -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
-                -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
-        awk -F$fs '{
-            indent = length($1)/2;
-            vname[indent] = $2;
-            for (i in vname) {if (i > indent) {delete vname[i]}}
-            if (length($3) > 0) {
-                vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
-                printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
-            }
-        }'
+        local prefix=$2
+        local s='[[:space:]]*' w='[a-zA-Z0-9_]*' fs=$(echo @|tr @ '\034')
+            sed -ne "s|^\($s\):|\1|" \
+                    -e "s|^\($s\)\($w\)$s:$s[\"']\(.*\)[\"']$s\$|\1$fs\2$fs\3|p" \
+                    -e "s|^\($s\)\($w\)$s:$s\(.*\)$s\$|\1$fs\2$fs\3|p"  $1 |
+            awk -F$fs '{
+                indent = length($1)/2;
+                vname[indent] = $2;
+                for (i in vname) {if (i > indent) {delete vname[i]}}
+                if (length($3) > 0) {
+                    vn=""; for (i=0; i<indent; i++) {vn=(vn)(vname[i])("_")}
+                    printf("%s%s%s=\"%s\"\n", "'$prefix'",vn, $2, $3);
+                }
+            }'
     }
 
     eval $(parse_yaml config.yaml)
@@ -54,13 +54,11 @@ if [ $# -ne 0 ] ; then
     }
     check_python_package "ultralytics"
     check_python_package "roboflow"
-    check_python_package "utils" 
+    check_python_package "utils"
     export PATH=$PATH:${python_dir}bin/
 
 else
     echo "Please enter a username in the form:"
     echo ". user_setup.sh [USERNAME]"
     echo "!!!!!THE DOT BEFORE THE SCRIPT NAME IS IMPORTANT!!!!"
-
 fi
-

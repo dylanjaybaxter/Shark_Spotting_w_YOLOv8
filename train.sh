@@ -20,6 +20,35 @@ parse_yaml() {
 
 eval $(parse_yaml config.yaml)
 
+# Create a Copy of data.yaml for evaluating the test
+'''rewrite_contents(){
+   local file_contents=$2
+   local field=$3
+   local new_value=$4
+   _contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
+}'''
+
+newfile="datasets/data_train.yaml"
+if [ -e $newfile ]; then
+    echo "Training Data Found."
+else
+    field="train"
+    new_value="./train/images"
+    file_contents=$(cat datasets/data.yaml)
+    # Replace the old value with the new value
+    new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
+    echo "$new_contents" > $newfile
+
+    field="val"
+    new_value="./val/images"
+    file_contents=$(cat ${newfile})
+    # Replace the old value with the new value
+    new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
+
+    # Write the new contents back to the file
+    echo "$new_contents" > $newfile
+fi
+
 # Run the Training Script
 yolo task=detect \
   mode=train \
