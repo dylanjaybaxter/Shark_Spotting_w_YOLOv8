@@ -8,7 +8,7 @@ python_dir: "/mpac/pylib/"
 ## Training Configuration for YOLOv8
 project_train: "YSP"
 experiment_train: "test_run"
-data_dir: "./datasets/data.yaml"
+data_dir: "./datasets/"
 model: "yolov8n.pt"
 batch: 32
 epochs: 1

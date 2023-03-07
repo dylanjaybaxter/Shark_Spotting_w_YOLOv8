@@ -20,34 +20,28 @@ parse_yaml() {
 
 eval $(parse_yaml config.yaml)
 
+cd ${data_dir}
+data_path=$(pwd)
 # Create a Copy of data.yaml for evaluating the test
-'''rewrite_contents(){
-   local file_contents=$2
-   local field=$3
-   local new_value=$4
-   _contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
-}'''
-
-newfile="datasets/data_train.yaml"
+newfile="data_train.yaml"
 if [ -e $newfile ]; then
     echo "Training Data Found."
-else
-    field="train"
-    new_value="./train/images"
-    file_contents=$(cat datasets/data.yaml)
-    # Replace the old value with the new value
-    new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
-    echo "$new_contents" > $newfile
-
-    field="val"
-    new_value="./val/images"
-    file_contents=$(cat ${newfile})
-    # Replace the old value with the new value
-    new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
-
-    # Write the new contents back to the file
-    echo "$new_contents" > $newfile
 fi
+field="train"
+new_value="${data_path}/train/images"
+file_contents=$(cat data.yaml)
+# Replace the old value with the new value
+new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
+echo "$new_contents" > $newfile
+
+field="val"
+new_value="${data_path}/valid/images"
+file_contents=$(cat ${newfile})
+# Replace the old value with the new value
+new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
+
+# Write the new contents back to the file
+echo "$new_contents" > $newfile
 
 # Run the Training Script
 yolo task=detect \
@@ -55,19 +49,19 @@ yolo task=detect \
   model=$model \
   project=$project_train \
   name=$experiment_train \
-  data=$data_dir \
+  data=${newfile} \
   epochs=$epochs \
   imgsz=$im_size \
   batch=$batch \
   patience=$patience \
   device=$device \
   workers=$workers \
-  overwrite=$overwrite \
+  exist_ok=$overwrite \
   lr0=$lr0 \
   lrf=$lrf \
   momentum=$momentum \
   weight_decay=$weight_decay \
-  warmup=$warmup \
+  warmup_epochs=$warmup \
   warmup_momentum=$warmup_momentum \
   warmup_bias_lr=$warmup_bias_lr \
   box=$box \
@@ -77,3 +71,5 @@ yolo task=detect \
   label_smoothing=$label_smoothing \
   nbs=$nbs \
   2>&1 
+
+  cd ..
