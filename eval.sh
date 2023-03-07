@@ -1,22 +1,5 @@
 #!/bash/bin/
 
-# Create a Copy of data.yaml for evaluating the test data
-
-newfile="datasets/data_test.yaml"
-if [ -e $newfile ]; then
-    echo "Test Data Found."
-else
-    field="val"
-    new_value="../test/images"
-    file_contents=$(cat datasets/data.yaml)
-
-    # Replace the old value with the new value
-    new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
-
-    # Write the new contents back to the file
-    echo "$new_contents" > $newfile
-fi
-
 # Get evaluation parameters
 parse_yaml() {
    local prefix=$2
@@ -35,7 +18,27 @@ parse_yaml() {
    }'
 }
 
+pwd
 eval $(parse_yaml config.yaml)
+
+# Create a Copy of data.yaml for evaluating the test data
+cd ${test_data_dir}
+data_path=$(pwd)
+newfile="data_test.yaml"
+if [ -e $newfile ]; then
+    echo "Test Data Found."
+fi
+field="val"
+new_value="${data_path}/test/images"
+file_contents=$(cat data.yaml)
+
+# Replace the old value with the new value
+new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
+
+echo "$new_contents"
+# Write the new contents back to the file
+echo "$new_contents" > $newfile
+cd ..
 
 # Create file paths for model and project
 exp_test_folder="${experiment_test}_test"
@@ -49,7 +52,7 @@ yolo task=detect \
   project=${project_test_folder} \
   name=${exp_test_folder} \
   model=${model_path} \
-  data=${test_data_dir} \
+  data="datasets/${newfile}" \
   save_json=${save_json} \
   iou=${iou} \
   conf=${confidence} 2>&1 | tee output.txt

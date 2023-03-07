@@ -44,12 +44,13 @@ new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_v
 echo "$new_contents" > $newfile
 
 # Run the Training Script
+cd ..
 yolo task=detect \
   mode=train \
   model=$model \
   project=$project_train \
   name=$experiment_train \
-  data=${newfile} \
+  data="datasets/${newfile}" \
   epochs=$epochs \
   imgsz=$im_size \
   batch=$batch \
@@ -72,4 +73,4 @@ yolo task=detect \
   nbs=$nbs \
   2>&1 
 
-  cd ..
+  

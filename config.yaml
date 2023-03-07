@@ -33,7 +33,7 @@ nbs: 64
 
 
 ## Test Evalutaion Configuration Parameters
-test_data_dir: "datasets/data_test.yaml"
+test_data_dir: "datasets/"
 confidence: 0.001
 iou: 0.6
 save_json: True
