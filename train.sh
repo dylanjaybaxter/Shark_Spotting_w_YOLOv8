@@ -51,6 +51,7 @@ new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_v
 echo "$new_contents" > $newfile
 
 # Run the Training Script
+touch /mpac/TRAINING_IN_PROGRESS.txt
 cd ..
 yolo task=detect \
   mode=train \
@@ -80,4 +81,4 @@ yolo task=detect \
   nbs=$nbs \
   2>&1 
 
-  
+  rm /mpac/TRAINING_IN_PROGRESS.txt
