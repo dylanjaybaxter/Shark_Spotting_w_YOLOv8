@@ -39,6 +39,13 @@ new_value="${data_path}/valid/images"
 file_contents=$(cat ${newfile})
 # Replace the old value with the new value
 new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
+echo "$new_contents" > $newfile
+
+field="test"
+new_value="${data_path}/test/images"
+file_contents=$(cat ${newfile})
+# Replace the old value with the new value
+new_contents="$(echo "$file_contents" | sed -e "s@^${field}:.*@${field}: ${new_value}@")"
 
 # Write the new contents back to the file
 echo "$new_contents" > $newfile
