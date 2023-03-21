@@ -11,14 +11,16 @@ from os import path
 import shutil
 from math import floor
 
+
 # Defaults for use as a script
 
-dimloc = "C:\\Users\\dylan\\Documents\\Data\\Shark_Spotting\\synthetic_batch_1_raw\\MacEditor\\"
-dcsv = "C:\\Users\\dylan\\Documents\\Data\\Shark_Spotting\\synthetic_batch_1_raw\\MacEditor\\output.csv"
+dimloc = "C:\\Users\\dylan\\Documents\\Data\\Shark_Spotting\\synthetic_batch_2_raw\\MacEditor\\"
+dcsv = "C:\\Users\\dylan\\Documents\\Data\\Shark_Spotting\\synthetic_batch_2_raw\\MacEditor\\output.csv"
 dsave_dir = "C:\\Users\\dylan\\Documents\\Data\\Shark_Spotting\\"
-dname = "synthetic_batch_1_roboflow"
+dname = "synthetic_batch_2_roboflow"
 dformat = "roboflow" # 'local', 'roboflow'
 SHARK_LABEL = 3
+MAX_EXTRACTIONS = 1000
 
 '''Function to add arguments'''
 def init_parser():
@@ -70,9 +72,9 @@ def main_func(args):
         cy = max(y2,y1)-(h/2)
 
         # Show Results with Box
-        #cv.rectangle(mat, (floor(x1), floor(y1)), (floor(x2), floor(y2)), (0, 255, 0), 2)
-        #cv.imshow("Bbox Check", mat)
-        #cv.waitKey(1)
+        cv.rectangle(mat, (floor(x1), floor(y1)), (floor(x2), floor(y2)), (0, 255, 0), 2)
+        cv.imshow("Bbox Check", mat)
+        cv.waitKey(1)
 
         # Normalize values by im dimensions and save to file
         if (args.format == 'local'):
@@ -86,7 +88,7 @@ def main_func(args):
         shutil.copy(path.join(args.ims, str(index)+".png"), path.join(im_path, str(index)+".png"))
 
         print(f"Processed file {index}.png")
-        if index==20:
+        if index==MAX_EXTRACTIONS:
             break
 
     print("Done!")
